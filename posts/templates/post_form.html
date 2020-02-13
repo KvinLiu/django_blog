@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+  {{ instance.title }} | {{ block.super }}
+{% endblock head_title %}
+
+<style> /* outside block will not rendered */
+ {% block style %}
+ h1 {
+   color: #777
+ }
+ {% endblock style %}
+</style>
+
+{% block content %}
+  {#{ block.super }#}
+  <div class="col-sm-6 col-offset-3">
+    <h1>Form</h1>
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input class="btn btn-default" type="submit" name="" value="Create Post" />
+    </form>
+  </div>
+{% endblock content %}
