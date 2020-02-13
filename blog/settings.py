@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third party app
     "debug_toolbar",
+    "pagedown.apps.PagedownConfig",
     # own app
     "posts",
 ]
@@ -131,7 +132,7 @@ STATICFILES_DIRS = [
     # "/var/www/static"
 ]
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_blog_cdn")
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")

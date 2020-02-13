@@ -12,6 +12,10 @@
  {% endblock style %}
 </style>
 
+{% block head_extra %}
+  {{ form.media }}
+{% endblock %}
+
 {% block content %}
   {#{ block.super }#}
   <div class="col-sm-6 col-offset-3">
