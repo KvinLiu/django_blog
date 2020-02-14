@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # Third party app
     "debug_toolbar",
     "pagedown.apps.PagedownConfig",
+    "markdown_deux",
     # own app
     "posts",
 ]

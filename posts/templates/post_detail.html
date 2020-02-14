@@ -5,13 +5,13 @@
   {{ instance.title }} | {{ block.super }}
 {% endblock head_title %}
 
-<style> /* outside block will not rendered */
- {% block style %}
- h1 {
-   color: #797
- }
- {% endblock style %}
-</style>
+{% block style %}
+  <style> /* outside block will not rendered */
+   h1 {
+     color: #797
+   }
+  </style>
+{% endblock style %}
 
 {% block content %}
   <div class="col-sm-6 col-sm-offset-3">
@@ -43,8 +43,8 @@
     <hr />
     <div class="row">
       <div class="col-sm-12">
-        <div class="content-markdown">
-          {{ instance.context }}
+        <div class="content-markdown post-detail-item">
+          {{ instance.get_markdown}}
         </div>
       </div>
       <br />
