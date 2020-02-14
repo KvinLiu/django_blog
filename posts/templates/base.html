@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>
-      {% block head_title %}Try Django 3.x{% endblock head_title %}
+      {% block head_title %}Django Blog{% endblock head_title %}
     </title>
     <link rel="stylesheet"
           href="{% static 'css/base.css' %}"
@@ -65,6 +65,9 @@
          // console.log(markedContent)
          $(this).html(markedContent);
        });
+       $('.content-markdown img').each(function() {
+         $(this).addClass("img-responsive")
+       })
      })
     </script>
 
