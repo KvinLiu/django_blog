@@ -41,10 +41,11 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "pagedown.apps.PagedownConfig",
     "markdown_deux",
+    "crispy_forms",
     # own app
     "posts",
 ]
-
+CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

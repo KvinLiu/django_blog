@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}
   {{ instance.title }} | {{ block.super }}
@@ -29,7 +30,7 @@
     <h1>Form</h1>
     <form action="" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ form | crispy }}
       <input class="btn btn-default" type="submit" name="" value="Create Post" />
     </form>
   </div>
