@@ -7,7 +7,7 @@ from .models import Post
 
 
 class PostForm(forms.ModelForm):
-    context = forms.CharField(widget=PagedownWidget)
+    context = forms.CharField(widget=PagedownWidget())
     publish = forms.DateField(widget=forms.SelectDateWidget)
 
     class Meta:

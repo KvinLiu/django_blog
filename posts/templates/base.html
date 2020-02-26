@@ -68,6 +68,27 @@
        $('.post-detail-item img').each(function() {
          $(this).addClass("img-responsive")
        })
+       // preview-title
+       var titleValue = $('#id_title')
+       $('#preview-title').text(titleValue.val())
+       // preview-content
+       var contentInput = $('#wmd-input-id_context')
+
+       function setContent(value) {
+         var markedContent = marked(value)
+         $("#preview-content").html(markedContent)
+         $('#preview-content img').each(function() {
+           $(this).addClass("img-responsive")
+         })
+       }
+
+       setContent(contentInput.val())
+
+       contentInput.keyup(function() {
+         var newContent = $(this).val()
+         setContent(newContent)
+       })
+
      })
     </script>
 
