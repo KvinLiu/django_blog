@@ -46,6 +46,11 @@
         <div class="content-markdown post-detail-item">
           {{ instance.get_markdown}}
         </div>
+        <hr />
+        <br />
+        <div>
+          {{ instance.comment_set.all }}
+        </div>
       </div>
       <br />
       <hr />
