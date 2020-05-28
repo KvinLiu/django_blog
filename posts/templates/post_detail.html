@@ -25,20 +25,6 @@
     {% if instance.user.get_full_name %}
       <p>Author: {{ instance.user.get_full_name }}</p>
     {% endif %}
-    <!-- <div>
-         <a href="https://www.facebook.com/sharer/sharer.php?url={{request.build_absolute_uri}}">
-         Facebook
-         </a>
-         <a href="https://twitter.com/home?status=I'm%20going%20to%20learn%20to%20Code...%20Come%20build%20an%20web%20apsp%20with%20me!%20%23CFE%20and%20@justinmitchel%20{{request.build_absolute_uri}}">
-         Twitter
-         </a>
-         <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://swiftforentrepreneurs.com/&title={{instance.title}}&summary={{share_string}}&source=http://swiftforentrepreneurs.com/">
-         Linkedin
-         </a>
-         <a href="http://www.reddit.com/submit?url=http://swiftforentrepreneurs.com/&title=Unlock%20to%20Learn%20Swift%20for%20Free!%20By%20Swift%20for%20Entrepreneurs.%20Made%20for%20Non%20Techincals.">
-         Reddit
-         </a>
-         </div> -->
     <div class="fb-like" data-href="{{request.build_absolute_uri}}" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
     <hr />
     <div class="row">
@@ -49,12 +35,17 @@
         <hr />
         <br />
         <div>
-          {{ instance.comment_set.all }}
+          <p class="lead">
+            Comments
+          </p>
+          <ul>
+            {% for comment in comments %}
+              <p>{{ comment.content_object.get_markdown }}</p>
+              <li>{{ comment.content }}</li>
+            {% endfor %}
+          </ul>
         </div>
       </div>
-      <br />
-      <hr />
-      <div class="fb-comments" data-href="{{request.build_absolute_uri}}" data-width="100%" data-numposts="5"></div>
     </div>
   </div>
 {% endblock content %}

@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -9,18 +10,12 @@ from django.db.models import Q
 from urllib.parse import quote_plus
 
 # Create your views here.
-
-# from posts.models import Post
-# Post.objects.all()
-# Post.objects.get(id="...")
-# Post.objects.filter(title__icontains="...")
-# Post.objects.create(title="...", context="...")
-
 # import Forms
 from .forms import PostForm
 
 # import Models
 from .models import Post
+from comments.models import Comment
 
 # the logic handle the request the browser/client make
 def post_create(request):
@@ -31,23 +26,12 @@ def post_create(request):
     context = {"form": form}
     if form.is_valid():
         instance = form.save(commit=False)
-        # instance.user = request.uesr
-        # print(form.cleaned_data.get("title"))
         instance.save()
         # message success
         messages.success(
             request, "<a href='#'>Successfully</a> Created", extra_tags="html_safe"
         )
         return HttpResponseRedirect(instance.get_absolute_url())
-    # else:
-    #     messages.success(request, "Not Successfully Created")
-
-    # if request.method == "POST":
-    #     print(request.POST.get("title"))
-    #     print(request.POST.get("context"))
-    #     Post.objects.create(title=...)
-
-    # return HttpResponse("<h1>Create</h1>")
     return render(request, "post_form.html", context)
 
 
@@ -58,7 +42,15 @@ def post_detail(request, slug):
         if not request.user.is_staff or not request.user.is_superuser:
             raise Http404
     share_str = quote_plus(instance.context)
-    context = {"title": instance.title, "instance": instance, "share_string": share_str}
+    content_type = ContentType.objects.get_for_model(Post)
+    obj_id = instance.id
+    comments = Comment.objects.filter(content_type=content_type, object_id=obj_id)
+    context = {
+        "title": instance.title,
+        "instance": instance,
+        "share_string": share_str,
+        "comments": comments,
+    }
     return render(request, "post_detail.html", context)
 
 
