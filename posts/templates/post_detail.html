@@ -38,12 +38,16 @@
           <p class="lead">
             Comments
           </p>
-          <ul>
-            {% for comment in comments %}
-              <p>{{ comment.content_object.get_markdown }}</p>
-              <li>{{ comment.content }}</li>
-            {% endfor %}
-          </ul>
+          <hr />
+          {% for comment in comments %}
+            <blockquote>
+              <p>{{ comment.content }}</p>
+              <footer>
+                via {{ comment.user }} | {{ comment.timestamp|timesince }} ago
+              </footer>
+            </blockquote>
+            <hr />
+          {% endfor %}
         </div>
       </div>
     </div>

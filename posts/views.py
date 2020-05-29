@@ -42,9 +42,7 @@ def post_detail(request, slug):
         if not request.user.is_staff or not request.user.is_superuser:
             raise Http404
     share_str = quote_plus(instance.context)
-    content_type = ContentType.objects.get_for_model(Post)
-    obj_id = instance.id
-    comments = Comment.objects.filter(content_type=content_type, object_id=obj_id)
+    comments = instance.comments  # Comment.objects.filter_by_instance(instance)
     context = {
         "title": instance.title,
         "instance": instance,
@@ -88,11 +86,6 @@ def post_list(request):
         "page_request_var": page_request_var,
         "today": today,
     }
-    # if request.user.is_authenticated:
-    #     context = {"title": "My User List"}
-    # else:
-    #     context = {"title": "List"}
-    # return HttpResponse("<h1>List</h1>")
     return render(request, "post_list.html", context)
 
 

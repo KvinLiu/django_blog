@@ -10,6 +10,8 @@ from django.conf import settings
 
 from markdown_deux import markdown
 
+from comments.models import Comment
+
 # Post.objects.all()
 # Post.objects.create()
 class PostManager(models.Manager):
@@ -64,6 +66,12 @@ class Post(models.Model):
         content = self.context
         markdown_content = markdown(content)
         return mark_safe(markdown_content)
+
+    @property
+    def comments(self):
+        instance = self
+        qs = Comment.objects.filter_by_instance(instance)
+        return qs
 
     def save(self, *args, **kwargs):  # new
         if not self.slug:
