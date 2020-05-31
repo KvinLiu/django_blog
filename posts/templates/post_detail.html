@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load urlify %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}
   {{ instance.title }} | {{ block.super }}
@@ -38,6 +39,13 @@
           <p class="lead">
             Comments
           </p>
+          <!-- Wired, have delete action=".", otherwise it post to /post/ -->
+          <form method="POST">
+            {% csrf_token %}
+            {{ comment_form|crispy }}
+            <input type="submit"
+                   value="Post comment" class="btn btn-default" />
+          </form>
           <hr />
           {% for comment in comments %}
             <blockquote>

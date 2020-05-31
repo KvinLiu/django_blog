@@ -1,3 +1,4 @@
+import re
 from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -15,6 +16,7 @@ from .forms import PostForm
 
 # import Models
 from .models import Post
+from comments.forms import CommentForm
 from comments.models import Comment
 
 # the logic handle the request the browser/client make
@@ -35,19 +37,45 @@ def post_create(request):
     return render(request, "post_form.html", context)
 
 
-def post_detail(request, slug):
-    # instance = Post.objects.get(id=3)
+def post_detail(request, slug=None):
     instance = get_object_or_404(Post, slug=slug)
     if instance.draft == True or instance.publish > timezone.now().date():
         if not request.user.is_staff or not request.user.is_superuser:
             raise Http404
     share_str = quote_plus(instance.context)
+
+    initial_data = {
+        "content_type": instance.get_content_type,
+        "object_id": instance.id,
+    }
+
+    form = CommentForm(request.POST or None, initial=initial_data)
+    if form.is_valid():
+        c_type = form.cleaned_data.get("content_type")
+        # print(c_type)
+        new_type = c_type.split("|")
+        # print(new_type[0].strip())
+        content_type = ContentType.objects.get(
+            app_label=new_type[0].strip(), model=new_type[1].strip()
+        )
+        obj_id = form.cleaned_data.get("object_id")
+        content_data = form.cleaned_data.get("content")
+        new_comment, created = Comment.objects.get_or_create(
+            user=request.user,
+            content_type=content_type,
+            object_id=obj_id,
+            content=content_data,
+        )
+        if created:
+            print("Yeah it worked!!")
+
     comments = instance.comments  # Comment.objects.filter_by_instance(instance)
     context = {
         "title": instance.title,
         "instance": instance,
         "share_string": share_str,
         "comments": comments,
+        "comment_form": form,
     }
     return render(request, "post_detail.html", context)
 
