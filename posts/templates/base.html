@@ -90,6 +90,12 @@
          setContent(newContent)
        })
 
+       $(".comment-reply-btn").click(function(e){
+         e.preventDefault();
+         console.log("hello");
+         $(this).parent().next(".comment-reply").fadeToggle();
+       })
+
      })
     </script>
 
