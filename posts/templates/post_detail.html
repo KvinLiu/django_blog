@@ -53,9 +53,9 @@
               <footer>
                 via {{ comment.user }} | {{ comment.timestamp|timesince }} ago |
                 {% if comment.children.count > 0 %} {{ comment.children.count }} Comment{% if comment.children.count > 1 %}s{% endif %} | {% endif %}
-                <a href="#" class="comment-replay-btn">Replay</a>
+                <a href="#" class="comment-reply-btn">Replay</a>
               </footer>
-              <div class="comment-reply" style="display:none">
+              <div class="comment-reply">
                 {% for child_comment in comment.children %}
                   <blockquote>
                     <p>{{ child_comment.content }}</p>

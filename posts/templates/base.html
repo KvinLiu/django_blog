@@ -7,21 +7,26 @@
     <title>
       {% block head_title %}Django Blog{% endblock head_title %}
     </title>
+    <!-- Latest compiled and minified CSS -->
+    <!-- <link rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+         crossorigin="anonymous"> -->
+    <!-- Optional theme -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" media="screen" /> -->
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{% static "css/font-awesome.css" %}" type="text/css" media="screen" />
+
     <link rel="stylesheet"
           href="{% static 'css/base.css' %}"
           type="text/css"
           media="screen">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" media="screen" />
 
     <style type="text/css" media="screen">
-     {% block style %}{% endblock style %}
+     {% block style %}{% endblock %}
     </style>
     <meta name="description" content="">
     <meta name="viewport" content=
@@ -45,20 +50,32 @@
       {% block content %} {% endblock content %}
     </div>
 
-    <script
-      src="https://code.jquery.com/jquery-1.12.4.min.js"
-      integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-      crossorigin="anonymous"></script>
+    <!-- <script
+         src="https://code.jquery.com/jquery-1.12.4.min.js"
+         integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+         crossorigin="anonymous"></script> -->
     <!-- Latest compiled and minified JavaScript -->
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-      crossorigin="anonymous"></script>
+    <!-- <script
+         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+         crossorigin="anonymous"></script> -->
     <!-- marked CDN -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.8.0/marked.min.js">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+    <script src="{% static 'js/jquery.js' %}">
+
     </script>
+    <script src="{% static 'js/bootstrap.js' %}">
+
+    </script>
+    <script type="text/javascript" src="{% static 'js/marked.js' %}"></script>
+
     <script type="text/javascript">
      $(document).ready(function(){
+       $(".comment-reply-btn").click(function(e) {
+         e.preventDefault();
+         $(this).parent().next(".comment-reply").fadeToggle();
+       })
+
        $('.content-markdown').each(function(){
          var content = $(this).text().trim();
          // console.log(content)
@@ -66,11 +83,13 @@
          // console.log(markedContent)
          $(this).html(markedContent);
        });
+
        $('.post-detail-item img').each(function() {
          $(this).addClass("img-responsive")
        })
        // preview-title
-       var titleValue = $('#id_title')
+       var titleValue = $('#id_title');
+
        $('#preview-title').text(titleValue.val())
        // preview-content
        var contentInput = $('#wmd-input-id_context')
@@ -83,23 +102,14 @@
          })
        }
 
-       setContent(contentInput.val())
+       setContent(contentInput.val());
 
        contentInput.keyup(function() {
          var newContent = $(this).val()
          setContent(newContent)
        })
 
-       $(".comment-reply-btn").click(function(e){
-         e.preventDefault();
-         console.log("hello");
-         $(this).parent().next(".comment-reply").fadeToggle();
-       })
-
      })
     </script>
-
-
-
   </body>
 </html>
